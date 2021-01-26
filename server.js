@@ -20,20 +20,16 @@ app.get("/", function (req, res) {
 
 // Returns timestamp
 app.get("/api/timestamp/:date", function(req, res) {
-// instantiate date using either unix or 12-3-2000 format
 let date;
-if(isNaN(req.params.date)) {
-  date = new Date(req.params.date);
+if(/^\d*$/.test(req.params.date)) {
+  date = new Date();
+  date.setTime(req.params.date);
 } else {
-  date = new Date(req.params.date / 1000);
+  date = new Date(req.params.date);
 }
-
-let message;
-//if date is not valid, print error message
+let message = {unix: date.getTime(), utc: date.toUTCString()};
 if(isNaN(date.getTime())) {
   message = {error: "Invalid Date"}
-} else {
-  message = {unix: date.getTime(), utc: date.toUTCString()};
 }
 res.send(message);
 });
