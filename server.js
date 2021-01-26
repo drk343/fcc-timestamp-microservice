@@ -25,7 +25,7 @@ let date;
 if(isNaN(req.params.date)) {
   date = new Date(req.params.date);
 } else {
-  date = new Date(req.params.date * 1000);
+  date = new Date(req.params.date / 1000);
 }
 
 let message;
